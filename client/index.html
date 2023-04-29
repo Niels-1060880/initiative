@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="popup-content">
+      <div id="done-list" class="dropzone">
+        <!-- Cards will be dragged into this div -->
+      </div>
+      <div id="wait-list">
+        <!-- Cards start in this div -->
+      </div>
+    </div>
+
+    <h2>Choose your players</h2>
+    <div class="player-cards">
+      <div id="player-row" class="new-card-row">
+        <div class="selectable">
+          <div
+            class="card player-card"
+            draggable="true"
+            ondblclick="bloodied(this)"
+          >
+            <p>Skado</p>
+            <div class="grave-stone-div" onclick="deathToggle(this)">
+              <object
+                data="../icons/gravestone.svg"
+                class="grave-stone"
+                type=""
+              ></object>
+            </div>
+          </div>
+        </div>
+        <div class="selectable">
+          <div
+            class="card player-card"
+            draggable="true"
+            ondblclick="bloodied(this)"
+
+          >
+            <p>Anila</p>
+            <div class="grave-stone-div" onclick="deathToggle(this)">
+              <object
+                data="../icons/gravestone.svg"
+                class="grave-stone"
+                type=""
+              ></object>
+            </div>
+          </div>
+        </div>
+        <div class="selectable">
+          <div
+            class="card player-card"
+            draggable="true"
+            ondblclick="bloodied(this)"
+          >
+            <p>Staszi</p>
+            <div class="grave-stone-div" onclick="deathToggle(this)">
+              <object
+                data="../icons/gravestone.svg"
+                class="grave-stone"
+                type=""
+              ></object>
+            </div>
+          </div>
+        </div>
+        <div class="selectable">
+          <div
+            class="card player-card"
+            draggable="true"
+            ondblclick="bloodied(this)"
+          >
+            <p>Leohorn</p>
+            <div class="grave-stone-div" onclick="deathToggle(this)">
+              <object
+                data="../icons/gravestone.svg"
+                class="grave-stone"
+                type=""
+              ></object>
+            </div>
+          </div>
+        </div>
+        <div class="selectable">
+          <div
+            class="card player-card"
+            draggable="true"
+            ondblclick="bloodied(this)"
+          >
+            <p>Skirr</p>
+            <div class="grave-stone-div" onclick="deathToggle(this)">
+              <object
+                data="../icons/gravestone.svg"
+                class="grave-stone"
+                type=""
+              ></object>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="npc-row" class="new-card-row">
+        <div class="selectable">
+          <div
+            id="1"
+            class="card enemy-card"
+            draggable="true"
+            ondblclick="bloodied(this)"
+          >
+            <p>Enemy</p>
+            <div class="grave-stone-div" onclick="deathToggle(this)">
+              <object
+                data="../icons/gravestone.svg"
+                class="grave-stone"
+                type=""
+              ></object>
+            </div>
+          </div>
+        </div>
+        <div class="selectable">
+          <div
+            id="3"
+            class="card enemy-card"
+            draggable="true"
+            ondblclick="bloodied(this)"
+          >
+            <div class="boss-banner"></div>
+            <p>Boss</p>
+            <div class="grave-stone-div" onclick="deathToggle(this)">
+              <object
+                data="../icons/gravestone.svg"
+                class="grave-stone"
+                type=""
+              ></object>
+            </div>
+          </div>
+        </div>
+        <div class="selectable">
+          <div
+            id="10"
+            class="card ally-card"
+            draggable="true"
+            ondblclick="bloodied(this)"
+          >
+            <p>NPC</p>
+            <div class="grave-stone-div" onclick="deathToggle(this)">
+              <object
+                data="../icons/gravestone.svg"
+                class="grave-stone"
+                type=""
+              ></object>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+html,
+body {
+  width: 100%;
+  margin: 0;
+  background-color: rgb(177, 176, 176);
+}
+
+p {
+  color: white;
+  text-align: center;
+  font-weight: bolder;
+}
+
+#popup-content {
+  display: flex;
+  border: 0.5px solid grey;
+  min-height: 100px;
+  margin-top: 10px;
+}
+
+#done-list {
+  display: flex;
+  min-width: 100px;
+  border-right: 3.5px solid black;
+  padding: 0 75px 0 0;
+  overflow: hidden;
+}
+
+#wait-list {
+  display: flex;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 75px;
+  margin: 0 1.5px;
+  border-radius: 10px;
+}
+
+.grave-stone {
+  pointer-events: none;
+  width: 30px;
+  text-align: center;
+}
+
+.grave-stone-div {
+  cursor: pointer;
+}
+
+.enemy-card {
+  background-color: red;
+}
+
+.boss-banner {
+  position: relative;
+  height: 10px;
+  width: 100%;
+  margin-bottom: -10px;
+  background-color: gold;
+}
+
+.player-card {
+  background-color: green;
+}
+
+.ally-card {
+  background-color: blue;
+}
+
+.hide {
+  display: none;
+}
+
+.bloodied {
+  background-color: black;
+}
+
+.drag-over {
+  border: dashed 3px red;
+}
+
+h2 {
+  text-align: center;
+}
+
+.selectable {
+  cursor: pointer;
+  height: 100px;
+  width: 75px;
+}
+
+.selectable .card {
+  pointer-events: none;
+}
+
+.player-cards {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.new-card-row {
+  display: flex;
+  margin: 5px 0;
+  gap: 5px;
+  width: 450px;
+  justify-content: center;
+}
