@@ -6,13 +6,11 @@ const io = require("socket.io")(3000, {
 
 io.on("connection", (socket) => {
   //   console.log(socket.id);
-
   socket.on("place-card", (id, cardClass, name) => {
       io.emit("place-card", id, cardClass, name);
   });
 
-
-
+  
   socket.on("bloodied-card", (string) => {
     console.log(string);
     socket.broadcast.emit("bloodied-card", string);
@@ -25,16 +23,11 @@ io.on("connection", (socket) => {
     console.log(string);
     socket.broadcast.emit("death-card", string);
   });
-  socket.on("dragstart-card", (string) => {
-    console.log(string);
-    socket.broadcast.emit("dragstart-card", string);
+
+
+  socket.on("dragdrop-card", (cardId) => {
+    // console.log(string);
+    io.emit("dragdrop-card", cardId);
   });
-  socket.on("dragdrop-card", (string) => {
-    console.log(string);
-    socket.broadcast.emit("dragdrop-card", string);
-  });
-  socket.on('new-round', string => {
-    console.log(string);
-    socket.broadcast.emit('new-round', string)
-  })
+
 });

@@ -19,11 +19,10 @@ socket.on("place-card", (id, cardClass, name) => {
               id="${id}"
               class="card ${cardClass}-card"
               draggable="true"
-              ondblclick="bloodied(${this})"
             >
               <div class="boss-banner"></div>
               <p>${name}</p>
-              <div class="grave-stone-div" onclick="deathToggle(${this})">
+              <div class="grave-stone-div">
                 <object
                   data="../icons/gravestone.svg"
                   class="grave-stone"
@@ -37,10 +36,9 @@ socket.on("place-card", (id, cardClass, name) => {
               id="${id}"
               class="card ${cardClass}-card"
               draggable="true"
-              ondblclick="bloodied(${this})"
             >
               <p>${name}</p>
-              <div class="grave-stone-div" onclick="deathToggle(${this})">
+              <div class="grave-stone-div">
                 <object
                   data="../icons/gravestone.svg"
                   class="grave-stone"
@@ -60,14 +58,10 @@ socket.on("unbloodied-card", (message) => {
 socket.on("death-card", (message) => {
   alert(message);
 });
-socket.on("dragstart-card", (message) => {
-  alert(message);
-});
-socket.on("dragdrop-card", (message) => {
-  alert(message);
-});
-socket.on("new-round", (message) => {
-  alert(message);
+socket.on("dragdrop-card", (cardId) => {
+  const card = document.getElementById(cardId);
+  waitList.removeChild(card);
+  doneList.appendChild(card);
 });
 
 // Handles new round
@@ -116,13 +110,13 @@ for (let selectable of selectables) {
 waitList.addEventListener("dragstart", (e) => {
   // Change the source element's background color
   // to show that drag has started
-  e.currentTarget.classList.add("dragging");
+  // e.currentTarget.classList.add("hide");
   // Clear the drag data cache (for all formats/types)
-  e.dataTransfer.clearData();
+  // e.dataTransfer.clearData();
   // Set the drag's format and data.
   // Use the event target's id for the data
   e.dataTransfer.setData("text/plain", e.target.id);
-  socket.emit("dragstart-card", "card startdrag");
+  socket.emit("dragstart-card", e.target.id);
 });
 
 doneList.addEventListener("dragenter", (e) => {
@@ -144,10 +138,10 @@ doneList.addEventListener("drop", (e) => {
   e.target.classList.remove("drag-over");
   // get the draggable element
   const id = e.dataTransfer.getData("text");
-  const draggable = document.getElementById(id);
+  // const draggable = document.getElementById(id);
   // add it to the drop target
-  e.target.appendChild(draggable);
-  socket.emit("dragdrop-card", "card dropped");
+  // e.target.appendChild(draggable);
+  socket.emit("dragdrop-card", id);
 });
 
 // Checks if wait list is empty
