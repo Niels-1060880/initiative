@@ -15,43 +15,39 @@ socket.on("place-card", (id, cardClass, name) => {
   let markup = "";
   if (name == "Boss") {
     markup = `
-          <div class="selectable">
             <div
               id="${id}"
               class="card ${cardClass}-card"
               draggable="true"
-              ondblclick="bloodied(this)"
+              ondblclick="bloodied(${this})"
             >
               <div class="boss-banner"></div>
               <p>${name}</p>
-              <div class="grave-stone-div" onclick="deathToggle(this)">
+              <div class="grave-stone-div" onclick="deathToggle(${this})">
                 <object
                   data="../icons/gravestone.svg"
                   class="grave-stone"
                   type=""
                 ></object>
               </div>
-            </div>
-          </div>`;
+            </div>`;
   } else {
     markup = `
-          <div class="selectable">
             <div
               id="${id}"
               class="card ${cardClass}-card"
               draggable="true"
-              ondblclick="bloodied(this)"
+              ondblclick="bloodied(${this})"
             >
               <p>${name}</p>
-              <div class="grave-stone-div" onclick="deathToggle(this)">
+              <div class="grave-stone-div" onclick="deathToggle(${this})">
                 <object
                   data="../icons/gravestone.svg"
                   class="grave-stone"
                   type=""
                 ></object>
               </div>
-            </div>
-          </div>`;
+            </div>`;
   }
   waitList.insertAdjacentHTML("beforeend", markup);
 });
