@@ -92,6 +92,13 @@ function bloodied(e) {
   }
 }
 
+const graveStoneDivs = document.getElementsByClassName("grave-stone-div");
+for (let graveStone of graveStoneDivs) {
+  graveStone.addEventListener("click", () => {
+    console.log("click");
+  });
+}
+
 function deathToggle(e) {
   e.parentElement.remove();
   socket.emit("death-card", "card died");
