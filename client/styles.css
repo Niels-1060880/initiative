@@ -28,7 +28,7 @@ p {
 
 #wait-list {
   display: flex;
-  gap: 5px;
+  gap: .5px;
 }
 
 .card {
