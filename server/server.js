@@ -10,7 +10,7 @@ io.on("connection", (socket) => {
       io.emit("place-card", id, cardClass, name);
   });
 
-  
+
   socket.on("bloodied-card", (string) => {
     console.log(string);
     socket.broadcast.emit("bloodied-card", string);
@@ -26,7 +26,6 @@ io.on("connection", (socket) => {
 
 
   socket.on("dragdrop-card", (cardId) => {
-    // console.log(string);
     io.emit("dragdrop-card", cardId);
   });
 
