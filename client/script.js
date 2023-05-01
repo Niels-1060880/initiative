@@ -5,6 +5,7 @@ const socket = io("http://localhost:3000");
 
 const doneList = document.getElementById("done-list");
 const waitList = document.getElementById("wait-list");
+let counter = document.getElementById("counter");
 
 socket.on("connect", () => {
   console.log(`You connected with id: ${socket.id}`);
@@ -66,6 +67,7 @@ socket.on("dragdrop-card", (cardId) => {
 socket.on("reset-game", () => {
   waitList.innerHTML = "";
   doneList.innerHTML = "";
+  counter.innerHTML = 0;
 });
 
 const cards = document.querySelectorAll(".card");
@@ -146,10 +148,9 @@ doneList.addEventListener("drop", (e) => {
 });
 
 // Handles new round
-let counter = document.getElementById("counter");
 // Checks if wait list is empty
 let divCheckingInterval = setInterval(() => {
-  if (waitList.children.length == 0 && doneList.hasAttributes()) {
+  if (waitList.children.length == 0 && doneList.childElementCount != 0) {
     newRound(doneList.children);
     counter.innerHTML++;
   }
