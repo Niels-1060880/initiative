@@ -6,10 +6,13 @@ const io = require("socket.io")(3000, {
 
 io.on("connection", (socket) => {
   //   console.log(socket.id);
-  socket.on("place-card", (string) => {
-    console.log(string);
-    socket.broadcast.emit("place-card", string);
+
+  socket.on("place-card", (id, cardClass, name) => {
+      io.emit("place-card", id, cardClass, name);
   });
+
+
+
   socket.on("bloodied-card", (string) => {
     console.log(string);
     socket.broadcast.emit("bloodied-card", string);

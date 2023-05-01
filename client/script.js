@@ -3,13 +3,57 @@ import { io } from "socket.io-client";
 
 const socket = io("http://localhost:3000");
 
+const doneList = document.getElementById("done-list");
+const waitList = document.getElementById("wait-list");
+
 socket.on("connect", () => {
   console.log(`You connected with id: ${socket.id}`);
   socket.emit("custom-event", "Hi");
 });
 
-socket.on("place-card", (message) => {
-  alert(message);
+socket.on("place-card", (id, cardClass, name) => {
+  let markup = "";
+  if (name == "Boss") {
+    markup = `
+          <div class="selectable">
+            <div
+              id="${id}"
+              class="card ${cardClass}-card"
+              draggable="true"
+              ondblclick="bloodied(this)"
+            >
+              <div class="boss-banner"></div>
+              <p>${name}</p>
+              <div class="grave-stone-div" onclick="deathToggle(this)">
+                <object
+                  data="../icons/gravestone.svg"
+                  class="grave-stone"
+                  type=""
+                ></object>
+              </div>
+            </div>
+          </div>`;
+  } else {
+    markup = `
+          <div class="selectable">
+            <div
+              id="${id}"
+              class="card ${cardClass}-card"
+              draggable="true"
+              ondblclick="bloodied(this)"
+            >
+              <p>${name}</p>
+              <div class="grave-stone-div" onclick="deathToggle(this)">
+                <object
+                  data="../icons/gravestone.svg"
+                  class="grave-stone"
+                  type=""
+                ></object>
+              </div>
+            </div>
+          </div>`;
+  }
+  waitList.insertAdjacentHTML("beforeend", markup);
 });
 socket.on("bloodied-card", (message) => {
   alert(message);
@@ -31,8 +75,6 @@ socket.on("new-round", (message) => {
 });
 
 // Handles new round
-const doneList = document.getElementById("done-list");
-const waitList = document.getElementById("wait-list");
 
 // Handles bloodied toggle
 const graveStones = document.getElementsByClassName("grave-stone");
@@ -60,13 +102,11 @@ const selectables = document.getElementsByClassName("selectable");
 let id = 1;
 for (let selectable of selectables) {
   selectable.addEventListener("click", () => {
-    for (let child of selectable.children) {
-      let newChild = child.cloneNode(true);
-      newChild.id = id;
-      id++;
-      socket.emit("place-card", "card placed");
-      waitList.appendChild(newChild);
-    }
+    let cardClass = selectable.classList[1];
+    let name = selectable.getElementsByTagName("*")[1].innerHTML;
+    if (name == "") name = selectable.getElementsByTagName("*")[2].innerHTML;
+    socket.emit("place-card", id, cardClass, name);
+    id++;
   });
 }
 
