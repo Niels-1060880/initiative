@@ -84,8 +84,33 @@ p {
   border: dashed 3px red;
 }
 
+/* Info */
+.info {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 0;
+}
+
+#reset {
+  background-color: gold;
+  padding: 5px 10px;
+  border-radius: 10px;
+  box-shadow: none;
+  border: none;
+  cursor: pointer;
+}
+
+#reset:hover {
+  background-color: goldenrod;
+}
+
+/* Character selection */
 h2 {
   text-align: center;
+  margin-top: 0;
 }
 
 .selectable {

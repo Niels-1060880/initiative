@@ -63,6 +63,18 @@ socket.on("dragdrop-card", (cardId) => {
   waitList.removeChild(card);
   doneList.appendChild(card);
 });
+socket.on("reset-game", () => {
+  waitList.innerHTML = "";
+  doneList.innerHTML = "";
+});
+
+const cards = document.querySelectorAll(".card");
+for (let card = 0; card <= cards.length; card++) {
+  console.log(cards[card]);
+  // card.addEventListener('click', () => {
+  //   console.log('card click');
+  // })
+}
 
 // Handles bloodied toggle
 const graveStones = document.getElementsByClassName("grave-stone");
@@ -134,10 +146,12 @@ doneList.addEventListener("drop", (e) => {
 });
 
 // Handles new round
+let counter = document.getElementById("counter");
 // Checks if wait list is empty
 let divCheckingInterval = setInterval(() => {
-  if (waitList.children.length == 0) {
+  if (waitList.children.length == 0 && doneList.hasAttributes()) {
     newRound(doneList.children);
+    counter.innerHTML++;
   }
 }, 500);
 
@@ -151,3 +165,9 @@ function newRound(children) {
     waitList.appendChild(card);
   }
 }
+
+// Handles reset
+const reset = document.getElementById("reset");
+reset.addEventListener("click", () => {
+  socket.emit("reset-game");
+});

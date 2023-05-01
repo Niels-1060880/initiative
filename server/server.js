@@ -28,5 +28,8 @@ io.on("connection", (socket) => {
   socket.on("dragdrop-card", (cardId) => {
     io.emit("dragdrop-card", cardId);
   });
+  socket.on('reset-game', () => {
+    io.emit("reset-game")
+  })
 
 });
