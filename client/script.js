@@ -5,7 +5,12 @@ const socket = io("http://localhost:3000");
 
 const doneList = document.getElementById("done-list");
 const waitList = document.getElementById("wait-list");
+const graveStoneDivs = document.getElementsByClassName("grave-stone-div");
+const graveStones = document.getElementsByClassName("grave-stone");
+const selectables = document.getElementsByClassName("selectable");
+const reset = document.getElementById("reset");
 let counter = document.getElementById("counter");
+let enemyCounter = document.getElementById("enemy-counter");
 
 socket.on("connect", () => {
   console.log(`You connected with id: ${socket.id}`);
@@ -49,6 +54,7 @@ socket.on("place-card", (id, cardClass, name) => {
             </div>`;
   }
   waitList.insertAdjacentHTML("beforeend", markup);
+  if (cardClass == "enemy") enemyCounter.innerHTML++;
 });
 socket.on("bloodied-card", (message) => {
   alert(message);
@@ -68,18 +74,18 @@ socket.on("reset-game", () => {
   waitList.innerHTML = "";
   doneList.innerHTML = "";
   counter.innerHTML = 0;
+  enemyCounter.innerHTML = 0;
 });
 
-const cards = document.querySelectorAll(".card");
-for (let card = 0; card <= cards.length; card++) {
-  console.log(cards[card]);
-  // card.addEventListener('click', () => {
-  //   console.log('card click');
-  // })
+const cards = document.getElementsByClassName("card");
+for (let card of cards) {
+  // console.log(card);
+  card.addEventListener("dblclick", () => {
+    console.log("card click");
+  });
 }
 
 // Handles bloodied toggle
-const graveStones = document.getElementsByClassName("grave-stone");
 function bloodied(e) {
   if (e.classList.contains("bloodied")) {
     e.classList.remove("bloodied");
@@ -95,7 +101,6 @@ function bloodied(e) {
 }
 
 // Handles the death of a card
-const graveStoneDivs = document.getElementsByClassName("grave-stone-div");
 for (let graveStone of graveStoneDivs) {
   graveStone.addEventListener("click", () => {
     console.log("click");
@@ -108,7 +113,6 @@ function deathToggle(e) {
 }
 
 // Handles adding of new card
-const selectables = document.getElementsByClassName("selectable");
 let id = 1;
 for (let selectable of selectables) {
   selectable.addEventListener("click", () => {
@@ -167,8 +171,9 @@ function newRound(children) {
   }
 }
 
-// Handles reset
-const reset = document.getElementById("reset");
+// Handles game reset
 reset.addEventListener("click", () => {
   socket.emit("reset-game");
 });
+
+// Checks how many enemies are on the board
