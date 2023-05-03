@@ -5,8 +5,6 @@ const socket = io("http://localhost:3000");
 
 const doneList = document.getElementById("done-list");
 const waitList = document.getElementById("wait-list");
-const graveStoneDivs = document.getElementsByClassName("grave-stone-div");
-const graveStones = document.getElementsByClassName("grave-stone");
 const selectables = document.getElementsByClassName("selectable");
 const reset = document.getElementById("reset");
 let counter = document.getElementById("counter");
@@ -59,14 +57,10 @@ socket.on("place-card", (id, cardClass, name) => {
 socket.on("bloodied-card", (cardId) => {
   const card = document.getElementById(cardId);
   card.classList.add("bloodied");
-  let graveStone = graveStones[card.id-1];
-  graveStone.style.backgroundColor = "white";
 });
 socket.on("unbloodied-card", (cardId) => {
   const card = document.getElementById(cardId);
   card.classList.remove("bloodied");
-  let graveStone = graveStones[card.id-1];
-  graveStone.style.backgroundColor = "transparent";
 });
 socket.on("death-card", (cardId) => {
   const card = document.getElementById(cardId);
