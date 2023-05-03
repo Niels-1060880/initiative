@@ -5,26 +5,24 @@ const io = require("socket.io")(3000, {
 });
 
 io.on("connection", (socket) => {
-  //   console.log(socket.id);
   socket.on("place-card", (id, cardClass, name) => {
       io.emit("place-card", id, cardClass, name);
   });
 
 
-  socket.on("bloodied-card", (string) => {
-    console.log(string);
-    socket.broadcast.emit("bloodied-card", string);
+  socket.on("bloodied-card", (cardId) => {
+    console.log(cardId);
+    io.emit("bloodied-card", cardId);
   });
-  socket.on("unbloodied-card", (string) => {
-    console.log(string);
-    socket.broadcast.emit("unbloodied-card", string);
-  });
-  socket.on("death-card", (string) => {
-    console.log(string);
-    socket.broadcast.emit("death-card", string);
+  socket.on("unbloodied-card", (cardId) => {
+    console.log(cardId);
+    io.emit("unbloodied-card", cardId);
   });
 
 
+  socket.on("death-card", (cardId) => {
+    io.emit("death-card", cardId);
+  });
   socket.on("dragdrop-card", (cardId) => {
     io.emit("dragdrop-card", cardId);
   });

@@ -56,14 +56,22 @@ socket.on("place-card", (id, cardClass, name) => {
   waitList.insertAdjacentHTML("beforeend", markup);
   if (cardClass == "enemy") enemyCounter.innerHTML++;
 });
-socket.on("bloodied-card", (message) => {
-  alert(message);
+socket.on("bloodied-card", (cardId) => {
+  const card = document.getElementById(cardId);
+  card.classList.add("bloodied");
+  let graveStone = graveStones[card.id-1];
+  graveStone.style.backgroundColor = "white";
 });
-socket.on("unbloodied-card", (message) => {
-  alert(message);
+socket.on("unbloodied-card", (cardId) => {
+  const card = document.getElementById(cardId);
+  card.classList.remove("bloodied");
+  let graveStone = graveStones[card.id-1];
+  graveStone.style.backgroundColor = "transparent";
 });
-socket.on("death-card", (message) => {
-  alert(message);
+socket.on("death-card", (cardId) => {
+  const card = document.getElementById(cardId);
+  card.outerHTML = "";
+  if (card.classList.contains("enemy-card")) enemyCounter.innerHTML--;
 });
 socket.on("dragdrop-card", (cardId) => {
   const card = document.getElementById(cardId);
@@ -77,39 +85,37 @@ socket.on("reset-game", () => {
   enemyCounter.innerHTML = 0;
 });
 
-const cards = document.getElementsByClassName("card");
-for (let card of cards) {
-  // console.log(card);
-  card.addEventListener("dblclick", () => {
-    console.log("card click");
-  });
-}
+// Handles the death of a card by using event capturing
+document.querySelector("body").addEventListener(
+  "click",
+  function (evt) {
+    // Do some check on target
+    if (evt.target.classList.contains("grave-stone-div")) {
+      socket.emit("death-card", evt.target.parentElement.id);
+    }
+  },
+  true
+); // Use Capturing
+
+// Handles when a card becomes bloodied by using event capturing
+document.querySelector("body").addEventListener(
+  "dblclick",
+  function (evt) {
+    // Do some check on target
+    if (evt.target.classList.contains("card")) {
+      bloodied(evt.target)
+    }
+  },
+  true
+); // Use Capturing
 
 // Handles bloodied toggle
 function bloodied(e) {
   if (e.classList.contains("bloodied")) {
-    e.classList.remove("bloodied");
-    let graveStone = graveStones[e.id - 1];
-    graveStone.style.backgroundColor = "transparent";
-    socket.emit("unbloodied-card", "card unbloodied");
+    socket.emit("unbloodied-card", e.id);
   } else {
-    e.classList.add("bloodied");
-    let graveStone = graveStones[e.id - 1];
-    graveStone.style.backgroundColor = "white";
-    socket.emit("bloodied-card", "card bloodied");
+    socket.emit("bloodied-card", e.id);
   }
-}
-
-// Handles the death of a card
-for (let graveStone of graveStoneDivs) {
-  graveStone.addEventListener("click", () => {
-    console.log("click");
-  });
-}
-
-function deathToggle(e) {
-  e.parentElement.remove();
-  socket.emit("death-card", "card died");
 }
 
 // Handles adding of new card
@@ -175,5 +181,3 @@ function newRound(children) {
 reset.addEventListener("click", () => {
   socket.emit("reset-game");
 });
-
-// Checks how many enemies are on the board
