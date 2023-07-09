@@ -4,7 +4,7 @@
   "description": "",
   "main": "initiative.js",
   "scripts": {
-    "start": "snowpack dev",
+    "start": "concurrently \"snowpack dev\" \"cd ../server && npm start\" ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,6 +14,7 @@
     "snowpack": "^3.8.8"
   },
   "dependencies": {
+    "concurrently": "^8.2.0",
     "socket.io-client": "^4.6.1"
   }
 }
